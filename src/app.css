@@ -1,0 +1,55 @@
+/* Deep-purple Light scheme (Default) */
+/* Can be forced with data-theme="light" */
+[data-theme='light'],
+:root:not([data-theme='dark']) {
+	--primary: #008080;
+	--primary-hover: #006666;
+	--primary-focus: rgba(0, 128, 128, 0.125);
+	--primary-inverse: #fff;
+}
+
+/* Deep-purple Dark scheme (Auto) */
+/* Automatically enabled if user has Dark mode enabled */
+@media only screen and (prefers-color-scheme: dark) {
+	:root:not([data-theme]) {
+		--primary: #008080;
+		--primary-hover: #006666;
+		--primary-focus: rgba(0, 128, 128, 0.25);
+		--primary-inverse: #fff;
+	}
+}
+
+/* Deep-purple Dark scheme (Forced) */
+/* Enabled if forced with data-theme="dark" */
+[data-theme='dark'] {
+	--primary: #008080;
+	--primary-hover: #006666;
+	--primary-focus: rgba(0, 128, 128, 0.25);
+	--primary-inverse: #fff;
+}
+
+/* Deep-purple (Common styles) */
+:root {
+	--form-element-active-border-color: var(--primary);
+	--form-element-focus-color: var(--primary-focus);
+	--switch-color: var(--primary-inverse);
+	--switch-checked-background-color: var(--primary);
+
+	--font-size: 16px;
+}
+
+button,
+a[role='button'],
+article {
+	border-radius: 0;
+	clip-path: polygon(
+		var(--corner) 0%,
+		100% 0%,
+		100% calc(100% - var(--corner)),
+		calc(100% - var(--corner)) 100%,
+		0% 100%,
+		0% var(--corner)
+	);
+
+	--corner: 0.5em;
+}
