@@ -45,7 +45,4 @@
 	.active {
 		color: var(--highlight-color);
 	}
-
-	main {
-	}
 </style>

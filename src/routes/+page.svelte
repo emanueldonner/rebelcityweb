@@ -25,8 +25,6 @@
 	.container {
 		display: flex;
 		align-items: center;
-		justify-content: center;
-		height: calc(100dvh - 4rem);
 	}
 
 	article {
