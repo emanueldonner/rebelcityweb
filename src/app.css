@@ -36,6 +36,10 @@
 	--switch-checked-background-color: var(--primary);
 
 	--font-size: 16px;
+
+	--highlight-color: #800080;
+
+	--background: rgba(0, 102, 102, 0.3);
 }
 
 button,
@@ -52,4 +56,8 @@ article {
 	);
 
 	--corner: 0.5em;
+}
+
+h1 {
+	text-align: center;
 }

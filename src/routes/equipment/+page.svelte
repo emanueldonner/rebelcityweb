@@ -30,20 +30,21 @@
 	// Reactive statement to filter equipment based on selected categories
 </script>
 
-<h1 class="title">Equipment</h1>
+<div class="container">
+	<h1 class="title">Equipment</h1>
 
-<div class="grid">
-	{#each categories as category}
-		<button
-			class="filter-button {selectedCategories.includes(category.id) ? '' : 'outline'}"
-			on:click={() => onCategorySelect(category.id)}
-		>
-			<iconify-icon icon={category.icon} />
-			{category.name}
-		</button>
-	{/each}
+	<div class="grid">
+		{#each categories as category}
+			<button
+				class="filter-button {selectedCategories.includes(category.id) ? '' : 'outline'}"
+				on:click={() => onCategorySelect(category.id)}
+			>
+				<iconify-icon icon={category.icon} />
+				{category.name}
+			</button>
+		{/each}
+	</div>
 </div>
-
 <div class="equipment-container">
 	{#each filteredEquipment as item}
 		<article class="equipment-item">

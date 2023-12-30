@@ -7,6 +7,7 @@
 	const navLinks = [
 		{ name: 'Rules', href: '/rules' },
 		{ name: 'Factions', href: '/factions' },
+		{ name: 'Research', href: '/research' },
 		{ name: 'Equipment', href: '/equipment' }
 	];
 
@@ -36,12 +37,12 @@
 		{/each}
 	</ul>
 </nav>
-<main class="container">
+<main class="container-fluid">
 	<slot />
 </main>
 
 <style>
 	.active {
-		color: #ff0000;
+		color: var(--highlight-color);
 	}
 </style>

@@ -46,7 +46,14 @@
 		gap: 1rem;
 		align-items: center;
 	}
+
 	h4 {
 		margin: 0;
+	}
+
+	@media (max-width: 600px) {
+		.factions-container {
+			grid-template-columns: 1fr;
+		}
 	}
 </style>
