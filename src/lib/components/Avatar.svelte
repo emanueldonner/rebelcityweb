@@ -9,12 +9,15 @@
 </script>
 
 {#if seed}
-	<div class="container avatar-container">
+	<div class="container">
 		<img class="avatar" src={avatar} alt="avatar" />
 	</div>
 {/if}
 
 <style>
+	.container {
+		padding: 0;
+	}
 	img {
 		width: 100%;
 		height: 100%;
