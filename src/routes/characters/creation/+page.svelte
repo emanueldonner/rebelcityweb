@@ -2,6 +2,7 @@
 	import { character } from '$lib/stores.js'; // Adjust the path to your store file
 	import { onMount } from 'svelte';
 	import Avatar from '$lib/components/Avatar.svelte';
+	import LockBox from '$lib/components/LockBox.svelte';
 	import { faker } from '@faker-js/faker';
 	import 'iconify-icon';
 
@@ -157,19 +158,19 @@
 			<fieldset class="profile-picture">
 				<div class="avatar-container">
 					<Avatar seed={char.avatar} />
-					<input class="lock-box" type="checkbox" bind:checked={lockAvatar} />
+					<LockBox lockId="lockAvatar" bind:lockState={lockAvatar} />
 				</div>
 			</fieldset>
 			<fieldset>
 				<label>
 					Name:
 					<input type="text" bind:value={char.name} />
-					<input class="lock-box" type="checkbox" bind:checked={lockName} />
+					<LockBox lockId="lockName" bind:lockState={lockName} />
 				</label>
 				<label>
 					Age:
 					<input type="number" bind:value={char.age} min="18" max="99" />
-					<input class="lock-box" type="checkbox" bind:checked={lockAge} />
+					<LockBox lockId="lockAge" bind:lockState={lockAge} />
 				</label>
 			</fieldset>
 		</div>
@@ -179,7 +180,7 @@
 				<label>
 					Background:
 					<textarea bind:value={char.background}></textarea>
-					<input class="lock-box" type="checkbox" bind:checked={lockBackground} />
+					<LockBox lockId="lockBackground" bind:lockState={lockBackground} />
 				</label>
 			</fieldset>
 		</div>
@@ -190,7 +191,7 @@
 				<legend>Stats (Points Used: {pointsUsed}/{pointsTotal})</legend>
 
 				<table role="grid">
-					<input class="lock-box" type="checkbox" bind:checked={lockStats} />
+					<LockBox lockId="lockStats" bind:lockState={lockStats} />
 					<thead>
 						<tr>
 							<th>Stat</th>
@@ -366,9 +367,6 @@
 		align-items: center;
 		gap: 0.5rem;
 		justify-content: center;
-	}
-	.random-button:hover {
-		color: var(--primary);
 	}
 
 	.lock-box {
