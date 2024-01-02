@@ -137,7 +137,7 @@
 </script>
 
 <div class="container">
-	<h1>Character Creation</h1>
+	<h1>Character Creator</h1>
 	<form>
 		<div class="form-row">
 			<button
@@ -367,15 +367,6 @@
 		align-items: center;
 		gap: 0.5rem;
 		justify-content: center;
-	}
-
-	.lock-box {
-		width: 1.5rem !important;
-		height: 1.5rem;
-		margin: 0;
-		position: absolute;
-		top: 0;
-		right: 0;
 	}
 
 	.profile-picture {

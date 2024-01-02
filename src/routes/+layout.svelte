@@ -10,7 +10,7 @@
 		{ name: 'Factions', href: '/factions' },
 		{ name: 'Research', href: '/research' },
 		{ name: 'Equipment', href: '/equipment' },
-		{ name: 'Character Creation', href: '/characters/creation' }
+		{ name: 'Creator', href: '/characters/creation' }
 	];
 
 	let isMobileMenuOpen = false;
