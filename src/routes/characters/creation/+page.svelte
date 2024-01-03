@@ -3,11 +3,13 @@
 	import { onMount } from 'svelte';
 	import Avatar from '$lib/components/Avatar.svelte';
 	import LockBox from '$lib/components/LockBox.svelte';
+	import AbilityScoreBox from '$lib/components/AbilityScoreBox.svelte';
+	import { rollDice } from '$lib/utils.js';
 	import { faker } from '@faker-js/faker';
 	import 'iconify-icon';
 
-	let pointsTotal = 27;
-	let pointsUsed = 0;
+	let pointsTotal = 0;
+	// let pointsUsed = 0;
 
 	let isLoading = false;
 
@@ -26,60 +28,87 @@
 	let char;
 	character.subscribe(($character) => {
 		char = $character;
-		calculatePointsUsed();
+		// calculatePointsUsed();
 	});
 
-	// Function to calculate the cost of a point in stats
-	function calculatePointCost(stat) {
-		if (stat <= 13) {
-			return stat - 8;
-		} else {
-			return 5 + 2 * (stat - 13);
-		}
+	// Function to calculate ability score modifier
+	function calculateModifier(stat) {
+		return Math.floor((stat - 10) / 2);
 	}
 
-	// Function to calculate the points used based on current stats
-	function calculatePointsUsed() {
-		pointsUsed = Object.values(char.stats).reduce((total, stat) => {
-			return total + calculatePointCost(stat);
-		}, 0);
+	// // Function to calculate the cost of a point in stats
+	// function calculatePointCost(stat) {
+	// 	if (stat <= 13) {
+	// 		return stat - 8;
+	// 	} else {
+	// 		return 5 + 2 * (stat - 13);
+	// 	}
+	// }
+
+	// // Function to calculate the points used based on current stats
+	// function calculatePointsUsed() {
+	// 	pointsUsed = Object.values(char.stats).reduce((total, stat) => {
+	// 		return total + calculatePointCost(stat);
+	// 	}, 0);
+	// }
+
+	// // Function to handle change in stats
+	// function updateStat(statName, newValue) {
+	// 	// First, calculate the cost if the new value is applied
+	// 	const tempStats = { ...char.stats, [statName]: newValue };
+	// 	const newPointsUsed = Object.values(tempStats).reduce((total, stat) => {
+	// 		return total + calculatePointCost(stat);
+	// 	}, 0);
+
+	// 	// Check if the new points used exceed the total allowed
+	// 	if (newPointsUsed <= pointsTotal) {
+	// 		// If within limit, apply the change
+	// 		char.stats[statName] = newValue;
+	// 		pointsUsed = newPointsUsed;
+	// 		character.set(char);
+	// 	} else {
+	// 		// If it exceeds, do not apply the change
+	// 		// Optionally, you could provide feedback to the user here
+	// 	}
+	// }
+
+	// function randomizeStats() {
+	// 	let newStats = { ...char.stats };
+	// 	let newPointsUsed = 0;
+
+	// 	do {
+	// 		Object.keys(newStats).forEach((stat) => {
+	// 			newStats[stat] = Math.floor(Math.random() * (15 - 8 + 1)) + 8;
+	// 		});
+	// 		newPointsUsed = Object.values(newStats).reduce((total, stat) => {
+	// 			return total + calculatePointCost(stat);
+	// 		}, 0);
+	// 	} while (newPointsUsed > pointsTotal);
+
+	// 	char.stats = newStats;
+	// 	pointsUsed = newPointsUsed;
+	// 	character.set(char);
+	// }
+
+	// Function to roll 4d6 and drop the lowest
+	function rollStat() {
+		let rolls = [rollDice(6), rollDice(6), rollDice(6), rollDice(6)];
+		rolls.sort((a, b) => a - b); // Sort the rolls
+		rolls.shift(); // Remove the lowest roll
+		return rolls.reduce((total, current) => total + current, 0); // Sum the remaining rolls
 	}
 
-	// Function to handle change in stats
-	function updateStat(statName, newValue) {
-		// First, calculate the cost if the new value is applied
-		const tempStats = { ...char.stats, [statName]: newValue };
-		const newPointsUsed = Object.values(tempStats).reduce((total, stat) => {
-			return total + calculatePointCost(stat);
-		}, 0);
-
-		// Check if the new points used exceed the total allowed
-		if (newPointsUsed <= pointsTotal) {
-			// If within limit, apply the change
-			char.stats[statName] = newValue;
-			pointsUsed = newPointsUsed;
-			character.set(char);
-		} else {
-			// If it exceeds, do not apply the change
-			// Optionally, you could provide feedback to the user here
-		}
+	// Function to calculate the total points from all stats
+	function calculateTotalPoints() {
+		return Object.values(char.stats).reduce((total, stat) => total + stat, 0);
 	}
 
+	// Function to randomize stats using the dice system
 	function randomizeStats() {
-		let newStats = { ...char.stats };
-		let newPointsUsed = 0;
-
-		do {
-			Object.keys(newStats).forEach((stat) => {
-				newStats[stat] = Math.floor(Math.random() * (15 - 8 + 1)) + 8;
-			});
-			newPointsUsed = Object.values(newStats).reduce((total, stat) => {
-				return total + calculatePointCost(stat);
-			}, 0);
-		} while (newPointsUsed > pointsTotal);
-
-		char.stats = newStats;
-		pointsUsed = newPointsUsed;
+		Object.keys(char.stats).forEach((stat) => {
+			char.stats[stat] = rollStat();
+		});
+		pointsTotal = calculateTotalPoints();
 		character.set(char);
 	}
 
@@ -188,9 +217,20 @@
 		<!-- Stats -->
 		<div class="form-row">
 			<fieldset>
-				<legend>Stats (Points Used: {pointsUsed}/{pointsTotal})</legend>
+				<legend>Total Points: {pointsTotal}</legend>
 
-				<table role="grid">
+				<div class="ability-score-container">
+					{#each Object.keys(char.stats) as stat}
+						<AbilityScoreBox
+							statName={stat}
+							statValue={char.stats[stat]}
+							statModifier={calculateModifier(char.stats[stat])}
+							on:change={(e) => updateStat(stat, e.detail.value)}
+						/>
+					{/each}
+					<LockBox lockId="lockStats" bind:lockState={lockStats} />
+				</div>
+				<!-- <table role="grid">
 					<LockBox lockId="lockStats" bind:lockState={lockStats} />
 					<thead>
 						<tr>
@@ -215,9 +255,10 @@
 						{/each}
 						// show total sum of stats
 					</tbody>
-				</table>
+				</table> -->
 			</fieldset>
-
+		</div>
+		<div class="form-row">
 			<!-- Skills -->
 			<fieldset>
 				<legend>Skills</legend>
@@ -386,6 +427,13 @@
 		border: 3px solid var(--primary);
 		background-color: var(--background);
 		position: relative;
+	}
+
+	.ability-score-container {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+		justify-content: center;
 	}
 
 	table {
