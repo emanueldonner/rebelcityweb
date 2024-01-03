@@ -72,9 +72,15 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+		cursor: pointer;
+		transition: all 0.2s ease-in-out;
 	}
+	.ability-score-box:hover {
+		filter: drop-shadow(0 0 0.05rem var(--highlight-color));
+	}
+
 	.background {
-		opacity: 0.8;
+		opacity: 1;
 	}
 	.ability-score-box__stat-value {
 		position: absolute;

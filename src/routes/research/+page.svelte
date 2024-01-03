@@ -190,7 +190,10 @@
 		padding: 1rem;
 	}
 
-	h2,
+	h2 {
+		margin: 0.3rem 0;
+		color: var(--primary);
+	}
 	h3 {
 		text-transform: capitalize;
 		margin: 0.3rem 0;

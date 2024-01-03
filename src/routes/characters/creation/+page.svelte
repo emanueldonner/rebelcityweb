@@ -4,6 +4,7 @@
 	import Avatar from '$lib/components/Avatar.svelte';
 	import LockBox from '$lib/components/LockBox.svelte';
 	import AbilityScoreBox from '$lib/components/AbilityScoreBox.svelte';
+	import InputField from '$lib/components/TextInput.svelte';
 	import { rollDice } from '$lib/utils.js';
 	import { faker } from '@faker-js/faker';
 	import 'iconify-icon';
@@ -165,8 +166,8 @@
 	};
 </script>
 
+<h1>Character Creator</h1>
 <div class="container">
-	<h1>Character Creator</h1>
 	<form>
 		<div class="form-row">
 			<button
@@ -191,14 +192,14 @@
 				</div>
 			</fieldset>
 			<fieldset>
-				<label>
+				<label for="name-input">
 					Name:
-					<input type="text" bind:value={char.name} />
+					<InputField type="text" id="name-input" bind:value={char.name} />
 					<LockBox lockId="lockName" bind:lockState={lockName} />
 				</label>
-				<label>
+				<label for="age-input">
 					Age:
-					<input type="number" bind:value={char.age} min="18" max="99" />
+					<InputField type="number" id="age-input" bind:value={char.age} min="18" max="99" />
 					<LockBox lockId="lockAge" bind:lockState={lockAge} />
 				</label>
 			</fieldset>
@@ -206,9 +207,9 @@
 
 		<div class="form-row">
 			<fieldset>
-				<label>
+				<label for="background-input">
 					Background:
-					<textarea bind:value={char.background}></textarea>
+					<InputField type="textarea" id="background-input" bind:value={char.background} />
 					<LockBox lockId="lockBackground" bind:lockState={lockBackground} />
 				</label>
 			</fieldset>
@@ -225,37 +226,10 @@
 							statName={stat}
 							statValue={char.stats[stat]}
 							statModifier={calculateModifier(char.stats[stat])}
-							on:change={(e) => updateStat(stat, e.detail.value)}
 						/>
 					{/each}
 					<LockBox lockId="lockStats" bind:lockState={lockStats} />
 				</div>
-				<!-- <table role="grid">
-					<LockBox lockId="lockStats" bind:lockState={lockStats} />
-					<thead>
-						<tr>
-							<th>Stat</th>
-							<th>Value</th>
-						</tr>
-					</thead>
-					<tbody>
-						{#each Object.keys(char.stats) as stat}
-							<tr>
-								<td>{stat.charAt(0).toUpperCase() + stat.slice(1)}</td>
-								<td>
-									<input
-										type="number"
-										min="8"
-										max="15"
-										bind:value={char.stats[stat]}
-										on:change={() => updateStat(stat, char.stats[stat])}
-									/>
-								</td>
-							</tr>
-						{/each}
-						// show total sum of stats
-					</tbody>
-				</table> -->
 			</fieldset>
 		</div>
 		<div class="form-row">
@@ -275,23 +249,11 @@
 							<tr>
 								<td>{skill.charAt(0).toUpperCase() + skill.slice(1)}</td>
 								<td>
-									<input
-										type="number"
-										bind:value={char.skills[skill].rating}
-										on:change={() =>
-											updateField('skills', skill, {
-												...char.skills[skill],
-												rating: char.skills[skill].rating
-											})}
-									/>
+									<InputField type="number" bind:value={char.skills[skill].rating} />
 								</td>
 								<td>
 									{#each char.skills[skill].specializations as specialization, index}
-										<input
-											type="text"
-											bind:value={specialization}
-											on:change={() => updateArrayField('skills', skill, index, specialization)}
-										/>
+										<input type="text" bind:value={specialization} />
 									{/each}
 								</td>
 							</tr>
@@ -309,11 +271,7 @@
 					{#each char.abilities.strengths as strength, index}
 						<label>
 							Strength {index + 1}:
-							<input
-								type="text"
-								bind:value={strength}
-								on:change={() => updateArrayField('abilities', 'strengths', index, strength)}
-							/>
+							<input type="text" bind:value={strength} />
 						</label>
 					{/each}
 				</div>
@@ -322,11 +280,7 @@
 					{#each char.abilities.weaknesses as weakness, index}
 						<label>
 							Weakness {index + 1}:
-							<input
-								type="text"
-								bind:value={weakness}
-								on:change={() => updateArrayField('abilities', 'weaknesses', index, weakness)}
-							/>
+							<input type="text" bind:value={weakness} />
 						</label>
 					{/each}
 				</div>
@@ -341,11 +295,7 @@
 							<label>
 								{itemCategory.slice(0, -1)}
 								{index + 1}:
-								<input
-									type="text"
-									bind:value={item}
-									on:change={() => updateArrayField('inventory', itemCategory, index, item)}
-								/>
+								<input type="text" bind:value={item} />
 							</label>
 						{/each}
 					</div>
@@ -356,14 +306,12 @@
 		<div class="form-row">
 			<!-- Additional Notes -->
 			<fieldset>
-				<label>
+				<label for="appearance-input">
 					Appearance:
-					<textarea bind:value={char.appearance}></textarea>
+					<InputField type="textarea" id="appearance-input" bind:value={char.appearance} />
 				</label>
-				<label
-					>Additional Notes
-					<textarea bind:value={char.additionalNotes}></textarea>
-				</label>
+				<label for="additional-notes-input">Additional Notes</label>
+				<InputField type="textarea" id="additional-notes-input" bind:value={char.additionalNotes} />
 			</fieldset>
 		</div>
 
@@ -424,7 +372,9 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		border: 3px solid var(--primary);
+		border: 1px solid var(--primary);
+		border-image-source: var(--border-gradient);
+		border-image-slice: 1;
 		background-color: var(--background);
 		position: relative;
 	}

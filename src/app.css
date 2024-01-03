@@ -44,13 +44,14 @@
 	--highlight-color: #800080;
 
 	--background: rgba(0, 102, 102, 0.3);
-}
 
-button,
-a[role='button'],
-article {
-	border-radius: 0;
-	clip-path: polygon(
+	--element-background-color: #161e25aa;
+
+	--card-background-color: var(--element-background-color);
+
+	--corner: 0.5em;
+
+	--sharp-corner-clip-path: polygon(
 		var(--corner) 0%,
 		100% 0%,
 		100% calc(100% - var(--corner)),
@@ -59,11 +60,26 @@ article {
 		0% var(--corner)
 	);
 
-	--corner: 0.5em;
+	--border-gradient: linear-gradient(60deg, transparent 0%, var(--primary) 50%, transparent 100%);
+}
+
+button,
+a[role='button'],
+article {
+	border-radius: 0;
+	clip-path: var(--sharp-corner-clip-path);
 }
 
 h1 {
 	text-align: center;
+	font-weight: 400;
+	margin-top: 1rem;
+	text-transform: uppercase;
+}
+
+h2 {
+	font-family: 'Fira Sans Extra Condensed', sans-serif;
+	text-transform: uppercase;
 }
 
 body {
@@ -73,4 +89,17 @@ body {
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	min-height: 100dvh;
+}
+body:after {
+	content: '';
+	width: 100%;
+	height: 100%;
+	background-position: inherit;
+	background-image: inherit;
+	background-size: inherit;
+	background-attachment: inherit;
+	background-repeat: inherit;
+	position: fixed;
+	top: 0;
+	z-index: -1;
 }
