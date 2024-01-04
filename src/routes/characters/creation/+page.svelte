@@ -266,7 +266,13 @@
 								<td class="td-skill" data-tooltip={char.skills[skill].description}>{skill}</td>
 								<td class="td-bonus">
 									{#if char.skills[skill].proficient}
-										{calculateModifier(char.stats[char.skills[skill].ability.toLowerCase()]) + 2}
+										{#if calculateModifier(char.stats[char.skills[skill].ability.toLowerCase()]) >= 0}
+											+{calculateModifier(char.stats[char.skills[skill].ability.toLowerCase()]) + 2}
+										{:else}
+											{calculateModifier(char.stats[char.skills[skill].ability.toLowerCase()]) + 2}
+										{/if}
+									{:else if calculateModifier(char.stats[char.skills[skill].ability.toLowerCase()]) >= 0}
+										+{calculateModifier(char.stats[char.skills[skill].ability.toLowerCase()])}
 									{:else}
 										{calculateModifier(char.stats[char.skills[skill].ability.toLowerCase()])}
 									{/if}
@@ -404,21 +410,24 @@
 			margin: 0;
 			margin-top: 4px;
 			transition: all 0.2s ease-in-out;
+			color: var(--background);
 		}
 		& label.active {
 			color: var(--primary);
 		}
 	}
 	.td-mod {
+		font-family: 'Fira Sans Extra Condensed';
 		font-weight: bold;
 		color: #ffffff88;
 	}
 	.td-skill {
-		font-size: 1.2rem;
+		font-size: 1.1rem;
 	}
 	.td-bonus {
 		font-size: 1.2rem;
 		font-weight: bold;
+		text-align: right;
 	}
 
 	@media (max-width: 768px) {
