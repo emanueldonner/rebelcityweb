@@ -22,25 +22,102 @@ export const character = writable({
 
 	// Skills
 	skills: {
-		technicalSkills: {
-			rating: 0, // 18
-			specializations: [] // ["Hacking", "Surveillance Systems"]
+		Athletics: {
+			description: 'Physical tasks like climbing, jumping, and swimming.',
+			score: 0,
+			proficient: false,
+			ability: 'Strength'
 		},
-		socialSkills: {
-			rating: 0, // 12
-			specializations: [] // ["Encryption Communication", "Propaganda"]
+		Stealth: {
+			description: 'Moving silently, hiding, and avoiding detection.',
+			score: 0,
+			proficient: false,
+			ability: 'Dexterity'
 		},
-		strategicSkills: {
-			rating: 0, // 14
-			specializations: [] // ["Urban Tactics", "Resource Allocation"]
+		'Sleight of Hand': {
+			description:
+				'Performing tasks that require dexterity and precision, such as pickpocketing or lockpicking.',
+			score: 0,
+			proficient: false,
+			ability: 'Dexterity'
 		},
-		medicalSkills: {
-			rating: 0, // 10
-			specializations: [] // ["Basic First Aid"]
+		Acrobatics: {
+			description: 'Maintaining balance, agility, and performing acrobatic stunts.',
+			score: 0,
+			proficient: false,
+			ability: 'Dexterity'
 		},
-		stealthSkills: {
-			rating: 0, // 15
-			specializations: [] // ["Covert Surveillance", "Infiltration"]
+		Technology: {
+			description: 'Handling modern gadgets, hacking, and IT skills.',
+			score: 0,
+			proficient: false,
+			ability: 'Intelligence'
+		},
+		Investigation: {
+			description: 'Looking for clues, researching, and analyzing information.',
+			score: 0,
+			proficient: false,
+			ability: 'Intelligence'
+		},
+		Medicine: {
+			description: 'Providing first aid, medical knowledge, and healthcare.',
+			score: 0,
+			proficient: false,
+			ability: 'Intelligence'
+		},
+		Mechanics: {
+			description: 'Repairing, modifying, and creating mechanical devices.',
+			score: 0,
+			proficient: false,
+			ability: 'Intelligence'
+		},
+		Insight: {
+			description: 'Judging motives and intentions, detecting lies or deception.',
+			score: 0,
+			proficient: false,
+			ability: 'Wisdom'
+		},
+		'Urban Survival': {
+			description: 'Navigating urban environments, finding resources.',
+			score: 0,
+			proficient: false,
+			ability: 'Wisdom'
+		},
+		Perception: {
+			description: 'Noticing subtle details, sensing danger, keen observation.',
+			score: 0,
+			proficient: false,
+			ability: 'Wisdom'
+		},
+		Psychology: {
+			description: 'Understanding human behavior, counseling, mental health awareness.',
+			score: 0,
+			proficient: false,
+			ability: 'Wisdom'
+		},
+		Persuasion: {
+			description: 'Convincing others, negotiation, inspiring people.',
+			score: 0,
+			proficient: false,
+			ability: 'Charisma'
+		},
+		Intimidation: {
+			description: 'Coercing others through threats or forceful tactics.',
+			score: 0,
+			proficient: false,
+			ability: 'Charisma'
+		},
+		Deception: {
+			description: 'Lying, disguising, and bluffing.',
+			score: 0,
+			proficient: false,
+			ability: 'Charisma'
+		},
+		Communication: {
+			description: 'Effective verbal and non-verbal communication, public speaking.',
+			score: 0,
+			proficient: false,
+			ability: 'Charisma'
 		}
 	},
 

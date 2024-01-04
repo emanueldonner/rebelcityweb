@@ -236,54 +236,45 @@
 			<!-- Skills -->
 			<fieldset>
 				<legend>Skills</legend>
-				<table>
+				<table class="skill-table">
 					<thead>
 						<tr>
+							<th>Prof</th>
+							<th>Mod</th>
 							<th>Skill</th>
-							<th>Rating</th>
-							<th>Specializations</th>
+							<th>Bonus</th>
 						</tr>
 					</thead>
 					<tbody>
 						{#each Object.keys(char.skills) as skill}
 							<tr>
-								<td>{skill.charAt(0).toUpperCase() + skill.slice(1)}</td>
-								<td>
-									<InputField type="number" bind:value={char.skills[skill].rating} />
+								<td class="td-prof">
+									<label for="prof-{skill}" class:active={char.skills[skill].proficient}>
+										<iconify-icon
+											icon={char.skills[skill].proficient
+												? 'lucide:check-circle-2'
+												: 'lucide:circle-dashed'}
+										/>
+									</label>
+									<input
+										id="prof-{skill}"
+										type="checkbox"
+										bind:checked={char.skills[skill].proficient}
+									/>
 								</td>
-								<td>
-									{#each char.skills[skill].specializations as specialization, index}
-										<input type="text" bind:value={specialization} />
-									{/each}
+								<td class="td-mod">{char.skills[skill].ability.slice(0, 3).toUpperCase()}</td>
+								<td class="td-skill" data-tooltip={char.skills[skill].description}>{skill}</td>
+								<td class="td-bonus">
+									{#if char.skills[skill].proficient}
+										{calculateModifier(char.stats[char.skills[skill].ability.toLowerCase()]) + 2}
+									{:else}
+										{calculateModifier(char.stats[char.skills[skill].ability.toLowerCase()])}
+									{/if}
 								</td>
 							</tr>
 						{/each}
 					</tbody>
 				</table>
-			</fieldset>
-		</div>
-		<div class="form-row">
-			<!-- Abilities -->
-			<fieldset>
-				<legend>Abilities</legend>
-				<div>
-					<strong>Strengths:</strong>
-					{#each char.abilities.strengths as strength, index}
-						<label>
-							Strength {index + 1}:
-							<input type="text" bind:value={strength} />
-						</label>
-					{/each}
-				</div>
-				<div>
-					<strong>Weaknesses:</strong>
-					{#each char.abilities.weaknesses as weakness, index}
-						<label>
-							Weakness {index + 1}:
-							<input type="text" bind:value={weakness} />
-						</label>
-					{/each}
-				</div>
 			</fieldset>
 			<!-- Inventory -->
 			<fieldset>
@@ -387,15 +378,47 @@
 	}
 
 	table {
-		width: 100%;
+		max-width: 20rem;
 	}
-
-	table tr td {
-		padding: 0;
+	table thead tr {
+		border-bottom: 1px solid var(--primary);
+	}
+	table tr td,
+	table tr th {
+		padding: 0.3rem 0;
+		border-bottom: none;
 
 		& input {
 			margin: 0;
 		}
+	}
+	.td-prof {
+		vertical-align: middle;
+		text-align: center;
+		& input {
+			display: none;
+		}
+		& label {
+			cursor: pointer;
+			font-size: 1.2rem;
+			margin: 0;
+			margin-top: 4px;
+			transition: all 0.2s ease-in-out;
+		}
+		& label.active {
+			color: var(--primary);
+		}
+	}
+	.td-mod {
+		font-weight: bold;
+		color: #ffffff88;
+	}
+	.td-skill {
+		font-size: 1.2rem;
+	}
+	.td-bonus {
+		font-size: 1.2rem;
+		font-weight: bold;
 	}
 
 	@media (max-width: 768px) {
