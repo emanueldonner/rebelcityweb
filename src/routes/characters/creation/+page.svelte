@@ -37,60 +37,6 @@
 		return Math.floor((stat - 10) / 2);
 	}
 
-	// // Function to calculate the cost of a point in stats
-	// function calculatePointCost(stat) {
-	// 	if (stat <= 13) {
-	// 		return stat - 8;
-	// 	} else {
-	// 		return 5 + 2 * (stat - 13);
-	// 	}
-	// }
-
-	// // Function to calculate the points used based on current stats
-	// function calculatePointsUsed() {
-	// 	pointsUsed = Object.values(char.stats).reduce((total, stat) => {
-	// 		return total + calculatePointCost(stat);
-	// 	}, 0);
-	// }
-
-	// // Function to handle change in stats
-	// function updateStat(statName, newValue) {
-	// 	// First, calculate the cost if the new value is applied
-	// 	const tempStats = { ...char.stats, [statName]: newValue };
-	// 	const newPointsUsed = Object.values(tempStats).reduce((total, stat) => {
-	// 		return total + calculatePointCost(stat);
-	// 	}, 0);
-
-	// 	// Check if the new points used exceed the total allowed
-	// 	if (newPointsUsed <= pointsTotal) {
-	// 		// If within limit, apply the change
-	// 		char.stats[statName] = newValue;
-	// 		pointsUsed = newPointsUsed;
-	// 		character.set(char);
-	// 	} else {
-	// 		// If it exceeds, do not apply the change
-	// 		// Optionally, you could provide feedback to the user here
-	// 	}
-	// }
-
-	// function randomizeStats() {
-	// 	let newStats = { ...char.stats };
-	// 	let newPointsUsed = 0;
-
-	// 	do {
-	// 		Object.keys(newStats).forEach((stat) => {
-	// 			newStats[stat] = Math.floor(Math.random() * (15 - 8 + 1)) + 8;
-	// 		});
-	// 		newPointsUsed = Object.values(newStats).reduce((total, stat) => {
-	// 			return total + calculatePointCost(stat);
-	// 		}, 0);
-	// 	} while (newPointsUsed > pointsTotal);
-
-	// 	char.stats = newStats;
-	// 	pointsUsed = newPointsUsed;
-	// 	character.set(char);
-	// }
-
 	// Function to roll 4d6 and drop the lowest
 	function rollStat() {
 		let rolls = [rollDice(6), rollDice(6), rollDice(6), rollDice(6)];
@@ -263,10 +209,10 @@
 									/>
 								</td>
 								<td class="td-mod">{char.skills[skill].ability.slice(0, 3).toUpperCase()}</td>
-								<td class="td-skill" data-tooltip={char.skills[skill].description}>{skill}</td>
+								<td class="td-skill" title={char.skills[skill].description}>{skill}</td>
 								<td class="td-bonus">
 									{#if char.skills[skill].proficient}
-										{#if calculateModifier(char.stats[char.skills[skill].ability.toLowerCase()]) >= 0}
+										{#if calculateModifier(char.stats[char.skills[skill].ability.toLowerCase()]) + 2 >= 0}
 											+{calculateModifier(char.stats[char.skills[skill].ability.toLowerCase()]) + 2}
 										{:else}
 											{calculateModifier(char.stats[char.skills[skill].ability.toLowerCase()]) + 2}
@@ -423,6 +369,7 @@
 	}
 	.td-skill {
 		font-size: 1.1rem;
+		border-bottom: 1px dashed var(--background);
 	}
 	.td-bonus {
 		font-size: 1.2rem;
