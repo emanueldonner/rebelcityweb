@@ -347,6 +347,7 @@
 	.td-prof {
 		vertical-align: middle;
 		text-align: center;
+		min-width: 2.5rem;
 		& input {
 			display: none;
 		}
@@ -366,6 +367,7 @@
 		font-family: 'Fira Sans Extra Condensed';
 		font-weight: bold;
 		color: #ffffff88;
+		min-width: 2.5rem;
 	}
 	.td-skill {
 		font-size: 1.1rem;
